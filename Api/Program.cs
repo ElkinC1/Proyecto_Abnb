@@ -1,6 +1,7 @@
 using Application.Departamentos.Queries;
 using Infrastructure;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<IDepartamentoGetAll, DepartamentoGetAll>();
+builder.Services.AddScoped<IDepartamentoGetById, DepartamentoGetById>();
+
 builder.Services.AddInfrastructure();
 
 var app = builder.Build();
@@ -31,6 +34,19 @@ if (app.Environment.IsDevelopment())
         dbContext.SaveChanges();
     }
 }
+app.MapGet(
+    "/departamentos/{id}",
+    async (int id, IDepartamentoGetById departamentoGetById) =>
+    {
+        var departamento = await departamentoGetById.Execute(id);
+        if (departamento == null)
+        {
+            return Results.NotFound();
+        }
+        return Results.Ok(departamento);
+    }
+);
+
 app.MapGet(
         "/departamentos",
         async (IDepartamentoGetAll departamentoGetAll) =>
