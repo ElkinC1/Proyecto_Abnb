@@ -1,5 +1,4 @@
-<Project Sdk="Aspire.AppHost.Sdk/13.3.5">
-
+<Project Sdk="Aspire.AppHost.Sdk/13.4.6">
   <ItemGroup>
     <ProjectReference Include="..\Api\Api.csproj" />
   </ItemGroup>
@@ -11,5 +10,4 @@
     <Nullable>enable</Nullable>
     <UserSecretsId>3f49a48b-917e-48fb-ba45-026f251b8ea6</UserSecretsId>
   </PropertyGroup>
-
 </Project>
